@@ -8,6 +8,8 @@ import { MatPaginator, MatTableDataSource } from "@angular/material";
   templateUrl: "./players-list.component.html",
   styleUrls: ["./players-list.component.css"]
 })
+
+//test comment
 export class PlayersListComponent implements OnInit {
   PlayerData: any = [];
   dataSource: MatTableDataSource<Player>;

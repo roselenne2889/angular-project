@@ -1,3 +1,4 @@
+Beatriz Morales 101159722 & Sahara Panna 101145593
 # AngularProject
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.5.

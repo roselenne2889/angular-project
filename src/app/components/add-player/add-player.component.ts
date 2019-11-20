@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
-import { Router } from '@angular/router';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material';
-import { ApiService } from './../../shared/api.service';
+import { Component, OnInit, ViewChild, NgZone } from "@angular/core";
+import { Router } from "@angular/router";
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { MatChipInputEvent } from "@angular/material";
+import { ApiService } from "./../../shared/api.service";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 export interface favoriteGame {
@@ -10,23 +10,22 @@ export interface favoriteGame {
 }
 
 @Component({
-  selector: 'app-add-player',
-  templateUrl: './add-player.component.html',
-  styleUrls: ['./add-player.component.css']
+  selector: "app-add-player",
+  templateUrl: "./add-player.component.html",
+  styleUrls: ["./add-player.component.css"]
 })
 export class AddPlayerComponent implements OnInit {
   visible = true;
   selectable = true;
   removable = true;
   addOnBlur = true;
-  @ViewChild('chipList') chipList;
-  @ViewChild('resetPlayerForm') myNgForm;
+  // @ViewChild('chipList') chipList;
+  // @ViewChild('resetPlayerForm') myNgForm;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   playerForm: FormGroup;
-  favGameArray: favoriteGame[] = [];
-  statusArray: any = ['Available', 'Unavailable']; 
-  rankArray: any= [1,2,3,4,5,6,7,8,,10];
-
+  favGameArray: favoriteGame[] = [{ name: "game1" }, { name: "game2" }];
+  statusArray: any = ["Available", "Unavailable"];
+  rankArray: any = [1, 2, 3, 4, 5, 6, 7, 8, , 10];
 
   ngOnInit() {
     this.submitBookForm();
@@ -37,19 +36,18 @@ export class AddPlayerComponent implements OnInit {
     private router: Router,
     private ngZone: NgZone,
     private playerApi: ApiService
-  ) { }
+  ) {}
 
   /* Reactive book form */
   submitBookForm() {
     this.playerForm = this.fb.group({
-      player_name: ['', [Validators.required]],
-      player_rank: ['', [Validators.required]],
-      score: ['', [Validators.required]],
-      time: ['', [Validators.required],
-      favorite_game:[this.favGameArray],
-        status, ['', [Validators.required]],
-    })
-
+      player_name: ["", [Validators.required]],
+      player_rank: ["", [Validators.required]],
+      // score: ["", [Validators.required]],
+      // time: ["", [Validators.required]],
+      favorite_game: [this.favGameArray],
+      status: ["", [Validators.required]]
+    });
   }
 
   /* Add dynamic languages */
@@ -57,12 +55,12 @@ export class AddPlayerComponent implements OnInit {
     const input = event.input;
     const value = event.value;
     // Add language
-    if ((value || '').trim() && this.favGameArray.length < 5) {
-      this.favGameArray.push({ name: value.trim() })
+    if ((value || "").trim() && this.favGameArray.length < 5) {
+      this.favGameArray.push({ name: value.trim() });
     }
     // Reset the input value
     if (input) {
-      input.value = '';
+      input.value = "";
     }
   }
 
@@ -86,17 +84,14 @@ export class AddPlayerComponent implements OnInit {
   /* Get errors */
   public handleError = (controlName: string, errorName: string) => {
     return this.playerForm.controls[controlName].hasError(errorName);
-  }
+  };
 
   /* Submit book */
   submitPlayerForm() {
     if (this.playerForm.valid) {
       this.playerApi.AddPlayer(this.playerForm.value).subscribe(res => {
-        this.ngZone.run(() => this.router.navigateByUrl('/player-list'))
+        this.ngZone.run(() => this.router.navigateByUrl("/players-list"));
       });
     }
   }
-
 }
-
-

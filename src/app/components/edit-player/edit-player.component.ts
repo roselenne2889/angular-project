@@ -20,8 +20,8 @@ export class EditPlayerComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
-  @ViewChild('chipList') chipList;
-  @ViewChild('resetPlayerForm') myNgForm;
+  // @ViewChild('chipList') chipList;
+  // @ViewChild('resetPlayerForm') myNgForm;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   playerForm: FormGroup;
   favGameArray: favoriteGame[] = [];
@@ -38,7 +38,7 @@ export class EditPlayerComponent implements OnInit {
     private router: Router,
     private ngZone: NgZone,
     private actRoute: ActivatedRoute,
-    private studentApi: ApiService
+    private playerApi: ApiService
   ) {
     var id = this.actRoute.snapshot.paramMap.get('id');
     this.playerApi.GetPlayer(id).subscribe(data => {
@@ -82,7 +82,7 @@ export class EditPlayerComponent implements OnInit {
   }
 
   /* Remove dynamic languages */
-  remove(subject: favoriteGame): void {
+  remove(favorite_game: favoriteGame): void {
     const index = this.favGameArray.indexOf(favorite_game);
     if (index >= 0) {
       this.favGameArray.splice(index, 1);
@@ -92,9 +92,9 @@ export class EditPlayerComponent implements OnInit {
   /* Date */
   formatDate(e) {
     var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
-    this.studentForm.get('dob').setValue(convertDate, {
-      onlyself: true
-    })
+    // this.studentForm.get('dob').setValue(convertDate, {
+    //   onlyself: true
+    // })
   }
 
   /* Get errors */

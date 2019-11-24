@@ -25,8 +25,8 @@ export class AddPlayerComponent implements OnInit {
   playerForm: FormGroup;
   favGameArray: favoriteGame[] = [{ name: "game1" }, { name: "game2" }];
   statusArray: any = ["Available", "Unavailable"];
-  rankArray: any = [1, 2, 3, 4, 5, 6, 7, 8, , 10];
-
+  rankArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  
   ngOnInit() {
     this.submitBookForm();
   }
@@ -43,8 +43,8 @@ export class AddPlayerComponent implements OnInit {
     this.playerForm = this.fb.group({
       player_name: ["", [Validators.required]],
       player_rank: ["", [Validators.required]],
-      // score: ["", [Validators.required]],
-      // time: ["", [Validators.required]],
+      score: ["", [Validators.required]],
+      time: ["", [Validators.required]],
       favorite_game: [this.favGameArray],
       status: ["", [Validators.required]]
     });
@@ -71,15 +71,6 @@ export class AddPlayerComponent implements OnInit {
       this.favGameArray.splice(index, 1);
     }
   }
-
-  /* Date */
-  /*
-  formatDate(e) {
-    var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
-    this.playerForm.get('dob').setValue(convertDate, {
-      onlyself: true
-    })
-  }  */
 
   /* Get errors */
   public handleError = (controlName: string, errorName: string) => {

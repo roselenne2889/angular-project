@@ -6,22 +6,13 @@
 
 <!-- Form -->
 <div class="inner-wrapper">
-  <form
-    [formGroup]="playerForm"
-    (ngSubmit)="submitPlayerForm()"
-    #resetPlayerForm="ngForm"
-    novalidate
-  >
+  <form [formGroup]="playerForm" (ngSubmit)="submitPlayerForm()" #resetPlayerForm="ngForm" novalidate>
     <!-- Left block -->
     <mat-card>
       <div class="controlers-wrapper">
         <!-- Name -->
         <mat-form-field class="example-full-width">
-          <input
-            matInput
-            placeholder="Player name"
-            formControlName="player_name"
-          />
+          <input matInput placeholder="Player name" formControlName="player_name" />
           <mat-error *ngIf="handleError('player_name', 'required')">
             You must provide a<strong>player name</strong>
           </mat-error>
@@ -30,110 +21,50 @@
         <!-- Rank -->
         <mat-form-field>
           <mat-label>Rank</mat-label>
-          <mat-select [(value)]="selected" formControlName="player_rank">
-            <mat-option [value]="rankArray" *ngFor="let rankArray of rankArray"
-              >{{ rankArray }}
+          <mat-select formControlName="player_rank">
+            <mat-option [value]="rankArray" *ngFor="let rankArray of rankArray">{{ rankArray }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="handleError('player_rank', 'required')">
-            PLayer Rank is required
+            Player Rank is required
           </mat-error>
         </mat-form-field>
-      </div>
-    </mat-card>
-    <!--<mat-form-field class="example-full-width">
-            <input matInput placeholder="Student email" formControlName="student_email">
-            <mat-error *ngIf="handleError('student_email', 'required')">
-              You must provide a<strong>student email</strong>
-            </mat-error>
-          </mat-form-field>
-        -->
-    <!-- Favorite Game -->
-    <mat-form-field>
-      <mat-label>Favorite Game</mat-label>
-      <mat-select [(value)]="selected" formControlName="favorite_game">
-        <mat-option [value]="favGameArray" *ngFor="let favGame of favGameArray"
-          >{{ favGame.name }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="handleError('favorite_game', 'required')">
-        Favorite Game is required
-      </mat-error>
-    </mat-form-field>
-    <!-- </div>
-      </mat-card> -->
-
-    <!-- Right block -->
-    <mat-card>
-      <div class="controlers-wrapper">
-        <!-- Add Favorite Games -->
-        <!-- <mat-form-field class="multiple-items">
-          <mat-chip-list #chipList>
-            <mat-chip
-              *ngFor="let favGameArray of favGameArray"
-              [selectable]="selectable"
-              [removable]="removable"
-              (removed)="remove(favGameArray)"
-            >
-              {{ favGameArray.name }}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-            </mat-chip>
-            <input
-              placeholder="Add Favorite Game"
-              [matChipInputFor]="chipList"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              [matChipInputAddOnBlur]="addOnBlur"
-              (matChipInputTokenEnd)="add($event)"
-            />
-          </mat-chip-list>
-          <i class="material-icons tooltip-info" matTooltip="Enter game name">
-            info
-          </i>
-        </mat-form-field> -->
-
-        <!-- Date of birth -->
-        <!--<mat-form-field>
-            <input matInput readonly [matDatepicker]="picker" placeholder="Date of birth" formControlName="dob"
-              (dateChange)="formatDate($event)">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <mat-error *ngIf="handleError('dob', 'required')">
-              Date of birth is required
-            </mat-error>
-         </mat-form-field>-->
-        <!--Player Status-->
+        <!-- Score -->
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Score" formControlName="score" />
+        </mat-form-field>
+        <!-- Time -->
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Time" formControlName="time" />
+        </mat-form-field>
+        <!-- Favorite Game -->
+        <mat-form-field>
+          <mat-label>Favorite Game</mat-label>
+          <mat-select formControlName="favorite_game">
+            <mat-option [value]="favGameArray" *ngFor="let favGame of favGameArray">{{ favGame.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="handleError('favorite_game', 'required')">
+            Favorite Game is required
+          </mat-error>
+        </mat-form-field>
         <mat-form-field>
           <mat-label>Status</mat-label>
-          <mat-select [(value)]="selected" formControlName="status">
-            <mat-option
-              [value]="statusArray"
-              *ngFor="let statusArray of statusArray"
-              >{{ statusArray }}
+          <mat-select formControlName="status">
+            <mat-option [value]="statusArray" *ngFor="let statusArray of statusArray">{{ statusArray }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="handleError('status', 'required')">
-            PLayer Status is required
+            Player Status is required
           </mat-error>
         </mat-form-field>
       </div>
-    </mat-card>
-
-    <!-- Gender -->
-    <!-- <mat-card>
-      <div class="misc-bottom-padding">
-        <mat-label>Gender:</mat-label>
-        <mat-radio-group aria-label="Select an option" formControlName="gender">
-          <mat-radio-button value="Male">Male</mat-radio-button>
-          <mat-radio-button value="Female">Female</mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </mat-card> -->
-
-    <!-- Submit & Reset -->
-    <mat-card>
       <div class="full-wrapper button-wrapper">
         <div class="button-wrapper">
-          <button type="submit" mat-flat-button color="warn">Submit</button>
+          <button type="submit" mat-flat-button color="warn" [disabled]="!playerForm.valid">Add</button>
+        </div>
+        <div class="button-wrapper">
+          <button type="button" mat-flat-button color="warn">Cancel</button>
         </div>
       </div>
     </mat-card>

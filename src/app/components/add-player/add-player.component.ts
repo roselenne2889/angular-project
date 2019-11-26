@@ -23,10 +23,15 @@ export class AddPlayerComponent implements OnInit {
   // @ViewChild('resetPlayerForm') myNgForm;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   playerForm: FormGroup;
-  favGameArray: favoriteGame[] = [{ name: "game1" }, { name: "game2" }];
+  favGameArray: favoriteGame[] = [
+    { name: "Fortnite" },
+    { name: "Call of Duty" },
+    { name: "League of Legends" },
+    { name: "Battlefield" }
+  ];
   statusArray: any = ["Available", "Unavailable"];
   rankArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  
+
   ngOnInit() {
     this.submitBookForm();
   }

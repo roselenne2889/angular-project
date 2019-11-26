@@ -1,8 +1,8 @@
-import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material';
-import { ApiService } from './../../shared/api.service';
+import { Router, ActivatedRoute } from "@angular/router";
+import { Component, OnInit, ViewChild, NgZone } from "@angular/core";
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { MatChipInputEvent } from "@angular/material";
+import { ApiService } from "./../../shared/api.service";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 export interface favoriteGame {
@@ -10,24 +10,23 @@ export interface favoriteGame {
 }
 
 @Component({
-  selector: 'app-edit-player',
-  templateUrl: './edit-player.component.html',
-  styleUrls: ['./edit-player.component.css']
+  selector: "app-edit-player",
+  templateUrl: "./edit-player.component.html",
+  styleUrls: ["./edit-player.component.css"]
 })
-
 export class EditPlayerComponent implements OnInit {
   visible = true;
   selectable = true;
   removable = true;
   addOnBlur = true;
   // @ViewChild('chipList') chipList;
-  // @ViewChild('resetPlayerForm') myNgForm;
+  //ViewChild('resetPlayerForm') myNgForm;
+
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   playerForm: FormGroup;
   favGameArray: favoriteGame[] = [];
-  statusArray: any = ['Available','Unavailable'];
-  rankArray: any= [1,2,3,4,5,6,7,8,,10];
-
+  statusArray: any = ["Available", "Unavailable"];
+  rankArray: any = [1, 2, 3, 4, 5, 6, 7, 8, , 10];
 
   ngOnInit() {
     this.updateBookForm();
@@ -40,9 +39,9 @@ export class EditPlayerComponent implements OnInit {
     private actRoute: ActivatedRoute,
     private playerApi: ApiService
   ) {
-    var id = this.actRoute.snapshot.paramMap.get('id');
+    var id = this.actRoute.snapshot.paramMap.get("id");
     this.playerApi.GetPlayer(id).subscribe(data => {
-      console.log(data.favoriteGame)
+      console.log(data.favoriteGame);
       this.favGameArray = data.favoriteGame;
       this.playerForm = this.fb.group({
         player_name: [data.player_name, [Validators.required]],
@@ -51,20 +50,20 @@ export class EditPlayerComponent implements OnInit {
         favoriteGame: [data.favoriteGame],
         time: [data.time, [Validators.required]],
         status: [data.status]
-      })
-    })
+      });
+    });
   }
 
   /* Reactive book form */
   updateBookForm() {
     this.playerForm = this.fb.group({
-      player_name: ['', [Validators.required]],
-      player_rank: ['', [Validators.required]],
-      score: ['', [Validators.required]],
+      player_name: ["", [Validators.required]],
+      player_rank: ["", [Validators.required]],
+      score: ["", [Validators.required]],
       favoriteGame: [this.favGameArray],
-      time: ['', [Validators.required]],
+      time: ["", [Validators.required]],
       status: [this.statusArray]
-    })
+    });
   }
 
   /* Add dynamic languages */
@@ -72,12 +71,12 @@ export class EditPlayerComponent implements OnInit {
     const input = event.input;
     const value = event.value;
     // Add language
-    if ((value || '').trim() && this.favGameArray.length < 5) {
-      this.favGameArray.push({ name: value.trim() })
+    if ((value || "").trim() && this.favGameArray.length < 5) {
+      this.favGameArray.push({ name: value.trim() });
     }
     // Reset the input value
     if (input) {
-      input.value = '';
+      input.value = "";
     }
   }
 
@@ -100,17 +99,16 @@ export class EditPlayerComponent implements OnInit {
   /* Get errors */
   public handleError = (controlName: string, errorName: string) => {
     return this.playerForm.controls[controlName].hasError(errorName);
-  }
+  };
 
   /* Update book */
   updatePlayerForm() {
-    console.log(this.playerForm.value)
-    var id = this.actRoute.snapshot.paramMap.get('id');
-    if (window.confirm('Are you sure you want to update?')) {
+    console.log(this.playerForm.value);
+    var id = this.actRoute.snapshot.paramMap.get("id");
+    if (window.confirm("Are you sure you want to update?")) {
       this.playerApi.UpdatePlayer(id, this.playerForm.value).subscribe(res => {
-        this.ngZone.run(() => this.router.navigateByUrl('/players-list'))
+        this.ngZone.run(() => this.router.navigateByUrl("/players-list"));
       });
     }
   }
-
 }

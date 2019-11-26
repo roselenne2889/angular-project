@@ -19,7 +19,8 @@ export class PlayersListComponent implements OnInit {
     "player_rank",
     "score",
     "time",
-    "status"
+    "status",
+    "action"
   ];
 
   constructor(private playerApi: ApiService) {

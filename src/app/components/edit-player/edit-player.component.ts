@@ -1,5 +1,5 @@
-import { Router, ActivatedRoute } from "@angular/router";
 import { Component, OnInit, ViewChild, NgZone } from "@angular/core";
+import { Router } from "@angular/router";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { MatChipInputEvent } from "@angular/material";
 import { ApiService } from "./../../shared/api.service";
@@ -20,49 +20,42 @@ export class EditPlayerComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   // @ViewChild('chipList') chipList;
-  //ViewChild('resetPlayerForm') myNgForm;
-
+  // @ViewChild('resetPlayerForm') myNgForm;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   playerForm: FormGroup;
-  favGameArray: favoriteGame[] = [];
+  favGameArray: favoriteGame[] = [
+    { name: "Fortnite" },
+    { name: "Call of Duty" },
+    { name: "League of Legends" },
+    { name: "Battlefield" }
+  ];
   statusArray: any = ["Available", "Unavailable"];
-  rankArray: any = [1, 2, 3, 4, 5, 6, 7, 8, , 10];
+  rankArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   ngOnInit() {
-    this.updateBookForm();
+    this.submitBookForm();
   }
 
   constructor(
     public fb: FormBuilder,
     private router: Router,
     private ngZone: NgZone,
-    private actRoute: ActivatedRoute,
     private playerApi: ApiService
-  ) {
-    var id = this.actRoute.snapshot.paramMap.get("id");
-    this.playerApi.GetPlayer(id).subscribe(data => {
-      console.log(data.favoriteGame);
-      this.favGameArray = data.favoriteGame;
-      this.playerForm = this.fb.group({
-        player_name: [data.player_name, [Validators.required]],
-        player_rank: [data.player_rank, [Validators.required]],
-        score: [data.score, [Validators.required]],
-        favoriteGame: [data.favoriteGame],
-        time: [data.time, [Validators.required]],
-        status: [data.status]
-      });
-    });
+  ) {}
+
+  getPlayer(id) {
+    this.playerApi.GetPlayer(id);
   }
 
   /* Reactive book form */
-  updateBookForm() {
+  submitBookForm() {
     this.playerForm = this.fb.group({
       player_name: ["", [Validators.required]],
       player_rank: ["", [Validators.required]],
       score: ["", [Validators.required]],
-      favoriteGame: [this.favGameArray],
       time: ["", [Validators.required]],
-      status: [this.statusArray]
+      favorite_game: [this.favGameArray],
+      status: ["", [Validators.required]]
     });
   }
 
@@ -88,25 +81,15 @@ export class EditPlayerComponent implements OnInit {
     }
   }
 
-  /* Date */
-  formatDate(e) {
-    var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
-    // this.studentForm.get('dob').setValue(convertDate, {
-    //   onlyself: true
-    // })
-  }
-
   /* Get errors */
   public handleError = (controlName: string, errorName: string) => {
     return this.playerForm.controls[controlName].hasError(errorName);
   };
 
-  /* Update book */
-  updatePlayerForm() {
-    console.log(this.playerForm.value);
-    var id = this.actRoute.snapshot.paramMap.get("id");
-    if (window.confirm("Are you sure you want to update?")) {
-      this.playerApi.UpdatePlayer(id, this.playerForm.value).subscribe(res => {
+  /* Submit book */
+  submitPlayerForm() {
+    if (this.playerForm.valid) {
+      this.playerApi.GetPlayer(this.playerForm.value).subscribe(res => {
         this.ngZone.run(() => this.router.navigateByUrl("/players-list"));
       });
     }

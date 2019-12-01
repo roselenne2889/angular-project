@@ -1,0 +1,22 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Join Game</mat-card-title>
+    </mat-card-header>
+    <div>
+        <div>Player: {{ playerData.player_name }}</div>
+        <div>Rank: {{ playerData.player_rank }}</div>
+        <div>Score: {{ playerData.score }}</div>
+        <div>Time: {{ playerData.time }}</div>
+        <div>Favourite Game: {{ playerData.favorite_game }}</div>
+        <div><label>Select a Game: 
+            <!-- <mat-select class="games-list">
+                <mat-option *ngFor="let game of playerData.favorite_game" [value]="game.name">
+                    {{ game.name }}
+                </mat-option>
+            </mat-select> -->
+        </label>
+        </div>
+    </div>
+    <button>Join</button>
+    <button>Cancel</button>
+</mat-card>

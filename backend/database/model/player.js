@@ -7,7 +7,7 @@ let Player = new Schema({
     type: String
   },
   player_rank: {
-    type: Array
+    type: Number
   },
   score: {
     type: Number
@@ -16,10 +16,10 @@ let Player = new Schema({
     type: String
   },
   favorite_game: {
-    type: Array
+    type: String
   },
   status: {
-    type: Array
+    type: String
   }
 }, {
   collection: 'players'

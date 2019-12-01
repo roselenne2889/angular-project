@@ -31,8 +31,8 @@
         <mat-form-field>
           <mat-label>Rank</mat-label>
           <mat-select formControlName="player_rank">
-            <mat-option [value]="rankArray" *ngFor="let rankArray of rankArray"
-              >{{ rankArray }}
+            <mat-option [value]="rank" *ngFor="let rank of rankArray"
+              >{{ rank }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="handleError('player_rank', 'required')">
@@ -58,7 +58,7 @@
           <mat-label>Favorite Game</mat-label>
           <mat-select formControlName="favorite_game">
             <mat-option
-              [value]="favGameArray"
+              [value]="favGame.name"
               *ngFor="let favGame of favGameArray"
               >{{ favGame.name }}
             </mat-option>
@@ -71,9 +71,9 @@
           <mat-label>Status</mat-label>
           <mat-select formControlName="status">
             <mat-option
-              [value]="statusArray"
-              *ngFor="let statusArray of statusArray"
-              >{{ statusArray }}
+              [value]="status"
+              *ngFor="let status of statusArray"
+              >{{ status }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="handleError('status', 'required')">

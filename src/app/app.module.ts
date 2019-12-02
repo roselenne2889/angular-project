@@ -12,6 +12,7 @@ import { PlayersListComponent } from "./components/players-list/players-list.com
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { PlayerRankingsComponent } from './components/player-rankings/player-rankings.component';
 import { JoinGameComponent } from './components/join-game/join-game.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { JoinGameComponent } from './components/join-game/join-game.component';
     EditPlayerComponent,
     PlayersListComponent,
     PlayerRankingsComponent,
-    JoinGameComponent
+    JoinGameComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,

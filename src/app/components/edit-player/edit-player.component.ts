@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, NgZone } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { MatChipInputEvent } from "@angular/material";
 import { ApiService } from "./../../shared/api.service";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Player } from "./../../shared/player";
 
 export interface favoriteGame {
   name: string;
@@ -31,7 +32,8 @@ export class EditPlayerComponent implements OnInit {
   ];
   statusArray: any = ["Available", "Unavailable"];
   rankArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
+  player: Player;
+  id: string;
   ngOnInit() {
     this.submitBookForm();
   }
@@ -40,8 +42,22 @@ export class EditPlayerComponent implements OnInit {
     public fb: FormBuilder,
     private router: Router,
     private ngZone: NgZone,
-    private playerApi: ApiService
-  ) {}
+    private playerApi: ApiService,
+    private route: ActivatedRoute
+  ) {
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.playerApi.GetPlayer(this.id).subscribe(data => {
+      this.player = data;
+      this.playerForm.setValue({
+        player_name: this.player.player_name,
+        player_rank: this.player.player_rank,
+        score: this.player.score,
+        time: this.player.time,
+        favorite_game: this.player.favorite_game,
+        status: this.player.status
+      });
+    });
+  }
 
   getPlayer(id) {
     this.playerApi.GetPlayer(id);
@@ -54,7 +70,7 @@ export class EditPlayerComponent implements OnInit {
       player_rank: ["", [Validators.required]],
       score: ["", [Validators.required]],
       time: ["", [Validators.required]],
-      favorite_game: [this.favGameArray],
+      favorite_game: ["", [Validators.required]],
       status: ["", [Validators.required]]
     });
   }
@@ -89,7 +105,7 @@ export class EditPlayerComponent implements OnInit {
   /* Submit book */
   submitPlayerForm() {
     if (this.playerForm.valid) {
-      this.playerApi.GetPlayer(this.playerForm.value).subscribe(res => {
+      this.playerApi.UpdatePlayer(this.id, this.playerForm.value).subscribe(res => {
         this.ngZone.run(() => this.router.navigateByUrl("/players-list"));
       });
     }

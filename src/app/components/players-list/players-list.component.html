@@ -8,6 +8,7 @@
   There is no player added yet!
 </p>
 <button routerLink="/add-player">Add New Player</button>
+<button (click)="adminLogout()">Log out</button>
 <div class="container" *ngIf="PlayerData.length > 0">
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">

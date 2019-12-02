@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Player } from "./player";
+import { Admin } from "./admin";
 import { Observable, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import {
@@ -13,9 +14,10 @@ import {
 })
 export class ApiService {
   endpoint: string = "http://localhost:4000/api";
+  endpointAdmin: string = "http://localhost:4000/api-admin";
   headers = new HttpHeaders().set("Content-Type", "application/json");
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Add Player
   AddPlayer(data: any): Observable<any> {
@@ -41,7 +43,7 @@ export class ApiService {
 
   // Update player
   UpdatePlayer(id, data: Player): Observable<any> {
-    let API_URL = `${this.endpoint}/edit-player/${id}`;
+    let API_URL = `${this.endpoint}/update-player/${id}`;
     return this.http
       .put(API_URL, data, { headers: this.headers })
       .pipe(catchError(this.errorMgmt));
@@ -51,6 +53,33 @@ export class ApiService {
   DeletePlayer(id): Observable<any> {
     var API_URL = `${this.endpoint}/delete-player/${id}`;
     return this.http.delete(API_URL).pipe(catchError(this.errorMgmt));
+  }
+
+  // Admin login
+  AdminLogin(data: Admin): Observable<any> {
+    const API_URL = `${this.endpointAdmin}/admin-login`;
+    return this.http.post(API_URL, data).pipe(
+      catchError(this.errorMgmt)
+    );
+  }
+
+  // Admin logout
+  AdminLogout(){
+    window.sessionStorage.removeItem("isLoggedIn");
+  }
+
+  // Set session storage for admin login
+  SetAdminLoginSession(){
+    window.sessionStorage.setItem("isLoggedIn", "true");
+  }
+
+  // Set session storage for admin login
+  IsAdminLoggedIn(): boolean {
+    const loginSession = window.sessionStorage.getItem("isLoggedIn");
+    if(loginSession !== null){
+      return true;
+    }
+    return false;
   }
 
   // Error handling

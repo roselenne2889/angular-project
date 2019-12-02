@@ -2,6 +2,7 @@ import { Player } from "./../../shared/player";
 import { ApiService } from "./../../shared/api.service";
 import { Component, ViewChild, OnInit } from "@angular/core";
 import { MatPaginator, MatTableDataSource } from "@angular/material";
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-players-list",
@@ -23,8 +24,8 @@ export class PlayersListComponent implements OnInit {
     "action"
   ];
 
-  constructor(private playerApi: ApiService) {
-    this.playerApi.GetPlayers().subscribe(data => {
+  constructor(private apiService: ApiService, private router: Router) {
+    this.apiService.GetPlayers().subscribe(data => {
       this.PlayerData = data;
       this.dataSource = new MatTableDataSource<Player>(this.PlayerData);
       setTimeout(() => {
@@ -35,6 +36,11 @@ export class PlayersListComponent implements OnInit {
 
   ngOnInit() {}
 
+  adminLogout(){
+    this.apiService.AdminLogout();
+    this.router.navigateByUrl("/player-rankings");
+  }
+
   deletePlayer(index: number, e) {
     if (window.confirm("Are you sure")) {
       const data = this.dataSource.data;
@@ -43,7 +49,7 @@ export class PlayersListComponent implements OnInit {
         1
       );
       this.dataSource.data = data;
-      this.playerApi.DeletePlayer(e._id).subscribe();
+      this.apiService.DeletePlayer(e._id).subscribe();
     }
   }
 }

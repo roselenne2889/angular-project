@@ -2,8 +2,8 @@ import { Component, ViewChild, HostListener, OnInit } from "@angular/core";
 import { MatSidenav } from "@angular/material/sidenav";
 import { ApiService } from "./shared/api.service";
 import { Router, NavigationStart } from "@angular/router";
-import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Observable } from "rxjs";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: "app-root",
@@ -16,14 +16,16 @@ export class AppComponent {
   navStart: Observable<NavigationStart>;
   @ViewChild("sidenav", { static: true }) sidenav: MatSidenav;
 
-  constructor(private apiService: ApiService, private router: Router){
+  constructor(private apiService: ApiService, private router: Router) {
     this.navStart = router.events.pipe(
       filter(evt => evt instanceof NavigationStart)
     ) as Observable<NavigationStart>;
   }
 
   ngOnInit() {
-    this.navStart.subscribe(evt => this.isLoggedIn = this.apiService.IsAdminLoggedIn());
+    this.navStart.subscribe(
+      evt => (this.isLoggedIn = this.apiService.IsAdminLoggedIn())
+    );
     this.isLoggedIn = this.apiService.IsAdminLoggedIn();
     if (window.innerWidth < 768) {
       this.sidenav.fixedTopGap = 55;
@@ -34,7 +36,7 @@ export class AppComponent {
     }
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     console.log("qwe");
   }
 

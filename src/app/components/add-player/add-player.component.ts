@@ -19,8 +19,6 @@ export class AddPlayerComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
-  // @ViewChild('chipList') chipList;
-  // @ViewChild('resetPlayerForm') myNgForm;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   playerForm: FormGroup;
   favGameArray: favoriteGame[] = [

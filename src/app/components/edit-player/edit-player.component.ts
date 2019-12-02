@@ -20,8 +20,6 @@ export class EditPlayerComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
-  // @ViewChild('chipList') chipList;
-  // @ViewChild('resetPlayerForm') myNgForm;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   playerForm: FormGroup;
   favGameArray: favoriteGame[] = [
@@ -45,7 +43,7 @@ export class EditPlayerComponent implements OnInit {
     private playerApi: ApiService,
     private route: ActivatedRoute
   ) {
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.paramMap.get("id");
     this.playerApi.GetPlayer(this.id).subscribe(data => {
       this.player = data;
       this.playerForm.setValue({
@@ -105,9 +103,11 @@ export class EditPlayerComponent implements OnInit {
   /* Submit book */
   submitPlayerForm() {
     if (this.playerForm.valid) {
-      this.playerApi.UpdatePlayer(this.id, this.playerForm.value).subscribe(res => {
-        this.ngZone.run(() => this.router.navigateByUrl("/players-list"));
-      });
+      this.playerApi
+        .UpdatePlayer(this.id, this.playerForm.value)
+        .subscribe(res => {
+          this.ngZone.run(() => this.router.navigateByUrl("/players-list"));
+        });
     }
   }
 }

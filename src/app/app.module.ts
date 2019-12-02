@@ -10,9 +10,10 @@ import { AddPlayerComponent } from "./components/add-player/add-player.component
 import { EditPlayerComponent } from "./components/edit-player/edit-player.component";
 import { PlayersListComponent } from "./components/players-list/players-list.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { PlayerRankingsComponent } from './components/player-rankings/player-rankings.component';
-import { JoinGameComponent } from './components/join-game/join-game.component';
-import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { PlayerRankingsComponent } from "./components/player-rankings/player-rankings.component";
+import { JoinGameComponent } from "./components/join-game/join-game.component";
+import { AdminLoginComponent } from "./components/admin-login/admin-login.component";
+import { GamesListComponent } from "./components/games-list/games-list.component";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
     PlayersListComponent,
     PlayerRankingsComponent,
     JoinGameComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    GamesListComponent
   ],
   imports: [
     BrowserModule,

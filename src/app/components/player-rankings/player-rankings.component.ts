@@ -1,12 +1,12 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from "@angular/core";
 import { Player } from "./../../shared/player";
-import { ApiService, } from "./../../shared/api.service";
+import { ApiService } from "./../../shared/api.service";
 import { MatPaginator, MatTableDataSource } from "@angular/material";
 
 @Component({
-  selector: 'app-player-rankings',
-  templateUrl: './player-rankings.component.html',
-  styleUrls: ['./player-rankings.component.css']
+  selector: "app-player-rankings",
+  templateUrl: "./player-rankings.component.html",
+  styleUrls: ["./player-rankings.component.css"]
 })
 export class PlayerRankingsComponent implements OnInit {
   PlayerData: any = [];
@@ -17,6 +17,7 @@ export class PlayerRankingsComponent implements OnInit {
     "player_rank",
     "score",
     "time",
+    "favorite_game",
     "status",
     "action"
   ];
@@ -32,7 +33,5 @@ export class PlayerRankingsComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

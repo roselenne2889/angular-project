@@ -9,8 +9,6 @@ import { Router, ActivatedRoute } from "@angular/router";
   templateUrl: "./players-list.component.html",
   styleUrls: ["./players-list.component.css"]
 })
-
-//test comment
 export class PlayersListComponent implements OnInit {
   PlayerData: any = [];
   dataSource: MatTableDataSource<Player>;
@@ -20,6 +18,7 @@ export class PlayersListComponent implements OnInit {
     "player_rank",
     "score",
     "time",
+    "favorite_game",
     "status",
     "action"
   ];
@@ -36,7 +35,7 @@ export class PlayersListComponent implements OnInit {
 
   ngOnInit() {}
 
-  adminLogout(){
+  adminLogout() {
     this.apiService.AdminLogout();
     this.router.navigateByUrl("/player-rankings");
   }
